@@ -1,0 +1,30 @@
+version: "3.7"
+
+services:
+        flask:
+                image: smsubhan/flaskapp:latest
+                container_name: flask
+                env_file:
+                        - aws.env
+                ports:
+                        - "8000:8000"
+                networks:
+                        my-network:
+                                aliases:
+                                        - flask-app
+        nginx:
+                image: smsubhan/nginx:latest
+                container_name: nginx
+                environment:
+                        - SERVER_NAME=18.117.14.8
+                restart: always
+                ports:
+                        - "80:80"
+                networks:
+                        - my-network
+                depends_on:
+                        - flask
+networks:
+        my-network:
+
+                
